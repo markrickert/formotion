@@ -1,5 +1,3 @@
-motion_require "../base"
-
 module Formotion
   class Section < Formotion::Base
     PROPERTIES = [

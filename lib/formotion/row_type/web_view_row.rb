@@ -1,5 +1,3 @@
-motion_require 'base'
-
 module Formotion
   module RowType
     class WebViewRow < Base
@@ -17,29 +15,29 @@ module Formotion
           @loading = false
         end
       end
-      
+
       def stringByEvaluatingJavaScriptFromString(script)
         @web_view.stringByEvaluatingJavaScriptFromString(script)
       end
-      
+
       def loading
         @loading
       end
 
       def build_cell(cell)
         cell.selectionStyle = self.row.selection_style || UITableViewCellSelectionStyleBlue
-        
+
         @loading = true
         @web_view = UIWebView.alloc.init
         @web_view.delegate = self
         set_page
-        
+
         observe(self.row, "value") do |old_value, new_value|
           break_with_semaphore do
             set_page
           end
         end
-        
+
         @web_view.tag = WEB_VIEW_TAG
         @web_view.contentMode = UIViewContentModeScaleAspectFit
         @web_view.backgroundColor = UIColor.clearColor
@@ -69,7 +67,7 @@ module Formotion
           return
         end
       end
-      
+
       #def webView(web_view, didFailLoadWithError:error)
       #end
 
@@ -79,7 +77,7 @@ module Formotion
       def webViewDidFinishLoad(web_view)
         @loading = false
       end
-      
+
     end
   end
 end

@@ -1,5 +1,3 @@
-motion_require 'base'
-
 # ideas taken from:
 # http://www.raywenderlich.com/10518/how-to-use-uiscrollview-to-scroll-and-zoom-content
 
@@ -19,9 +17,9 @@ module Formotion
       def build_cell(cell)
         # only show the "plus" when editable
         add_plus_accessory(cell) if row.editable?
-        
+
         self.row.value = [] unless self.row.value.is_a?(Array)
-        
+
         @page_view     = UIPageControl.alloc.init
         @page_view.tag = PAGE_VIEW_TAG
         @page_view.pageIndicatorTintColor        = '#d0d0d0'.to_color
@@ -37,7 +35,7 @@ module Formotion
           @scroll_view.contentOffset=point
         end
         cell.addSubview(@page_view)
-        
+
         @scroll_view          = UIScrollView.alloc.init
         @scroll_view.tag      = SCROLL_VIEW_TAG
         @scroll_view.delegate = self
@@ -45,7 +43,7 @@ module Formotion
         @scroll_view.delaysContentTouches = true
         @scroll_view.showsHorizontalScrollIndicator=false
         @scroll_view.showsVerticalScrollIndicator=false
-        
+
         pages_size = @scroll_view.frame.size
         @scroll_view.contentSize = CGSizeMake(pages_size.width * self.row.value.size, pages_size.height)
         @page_views = [nil]*self.row.value.size
@@ -57,7 +55,7 @@ module Formotion
             old_layoutSubviews
 
             # viewWithTag is terrible, but I think it's ok to use here...
-            
+
             formotion_field = self.viewWithTag(SCROLL_VIEW_TAG)
             field_frame = formotion_field.frame
             field_frame.origin.y = 10
@@ -67,7 +65,7 @@ module Formotion
             field_frame.size.height = f_height
             formotion_field.frame = field_frame
             scroll_view=formotion_field
-            
+
             formotion_field = self.viewWithTag(PAGE_VIEW_TAG)
             field_frame = formotion_field.frame
             field_frame.origin.y = 20 + f_height
@@ -75,7 +73,7 @@ module Formotion
             field_frame.size.width  = self.frame.size.width - field_frame.origin.x - Formotion::RowType::Base.field_buffer
             field_frame.size.height = 10
             formotion_field.frame = field_frame
-            
+
             scroll_view.delegate.resizePages
             scroll_view.delegate.clearPages
           end
@@ -98,7 +96,7 @@ module Formotion
           self.clearPages
           return
         end
-    
+
         source = nil
         case actionSheet.buttonTitleAtIndex(index)
         when TAKE
@@ -141,7 +139,7 @@ module Formotion
         end
         cell.accessoryView = cell.editingAccessoryView = @add_button
       end
-      
+
       #{{{Paged
       def loadVisiblePages
         # First, determine which page is currently visible
@@ -163,12 +161,12 @@ module Formotion
           self.purgePage(i)
         end
       end
-      
+
       def get_active_page
         page_width = @scroll_view.frame.size.width
         ((@scroll_view.contentOffset.x * 2.0 + page_width) / (page_width * 2.0)).floor
       end
-  
+
       def pages_single_tap
         page = get_active_page
         if row.editable?
@@ -177,7 +175,7 @@ module Formotion
           _on_select(nil, nil)
         end
       end
-  
+
       def take_photo(_page=nil)
         @photo_page=_page
         @action_sheet = UIActionSheet.alloc.init
@@ -188,14 +186,14 @@ module Formotion
         @action_sheet.cancelButtonIndex = (@action_sheet.addButtonWithTitle CANCEL)
         @action_sheet.showInView @scroll_view
       end
-  
+
       def clearPages
         0.upto(@page_views.size-1) do |i|
           self.purgePage(i) unless @page_views[i].nil?
         end
         self.loadVisiblePages
       end
-  
+
       def resizePages
         pages_size = @scroll_view.frame.size
         @scroll_view.contentSize = CGSizeMake(pages_size.width * self.row.value.size, pages_size.height)
@@ -208,7 +206,7 @@ module Formotion
         @page_view.currentPage   = 0
         @page_view.numberOfPages = self.row.value.size
       end
-  
+
       def loadPage(_page)
         if _page < 0 || _page >= self.row.value.size
           # If it's outside the range of what we have to display, then do nothing
@@ -248,13 +246,13 @@ module Formotion
           @page_views[_page]=nil
         end
       end
-  
+
       def scrollViewDidScroll(_scroll_view)
         # Load the pages which are now on screen
         self.loadVisiblePages
       end
       #}}}
-      
+
     end
   end
 end

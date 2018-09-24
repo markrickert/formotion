@@ -1,5 +1,3 @@
-motion_require 'base'
-
 module Formotion
   module RowType
     class CheckRow < Base

@@ -1,5 +1,3 @@
-motion_require 'base'
-
 # Define template row:
 # {
 #   title: "Add nickname",
@@ -60,7 +58,7 @@ module Formotion
             row.template_parent.template_children.delete_at(row.index)
           end
         end
-        
+
         # inherit some infos to template child
         if row.on_tap_callback
           new_row.on_tap_callback = row.on_tap_callback
@@ -69,7 +67,7 @@ module Formotion
           new_row.on_delete_callback = row.on_delete_callback
         end
         new_row.key = "#{row.key}_template".to_sym
-        
+
         new_row.remove_on_delete = true
         new_row.template_parent = row
         row.template_children ||= []

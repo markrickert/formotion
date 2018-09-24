@@ -1,6 +1,3 @@
-motion_require 'base'
-motion_require 'items_mapper'
-
 module Formotion
   module RowType
     class OptionsRow < Base

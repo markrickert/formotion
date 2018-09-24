@@ -1,5 +1,3 @@
-motion_require 'string_row'
-
 module Formotion
   module RowType
     class PhoneRow < StringRow

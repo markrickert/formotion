@@ -1,6 +1,3 @@
-motion_require 'string_row'
-motion_require 'multi_choice_row'
-
 module Formotion
   module RowType
     class DateRow < StringRow
@@ -54,8 +51,8 @@ module Formotion
           self.picker.setDate(self.picker.date, animated:true)
           picker.countDownDuration = self.row.value.to_f
         end
-        
-        #ensure the UIDatePicker gets updated if we update the row value 
+
+        #ensure the UIDatePicker gets updated if we update the row value
         observe(self.row, "value") do |old_value, new_value|
           self.picker.setDate(date_from_numeric(new_value), animated:true)
         end

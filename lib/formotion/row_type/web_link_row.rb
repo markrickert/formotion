@@ -1,5 +1,3 @@
-motion_require 'object_row'
-
 module Formotion
   module RowType
     class WebLinkRow < ObjectRow
