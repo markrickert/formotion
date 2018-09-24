@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'guard-motion'
+gem 'guard-motion', github: 'satoyos/guard-motion', branch: 'inherit_Plugin'
 gem 'rb-fsevent'
 
 gem "motion-cocoapods"
